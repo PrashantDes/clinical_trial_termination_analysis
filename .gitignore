@@ -1,0 +1,5 @@
+# Large source data is not stored in the repo
+data/
+*.txt
+.ipynb_checkpoints/
+__pycache__/
