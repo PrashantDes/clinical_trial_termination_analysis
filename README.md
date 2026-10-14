@@ -17,6 +17,12 @@ Analysis of 289,595 finished interventional trials from [ClinicalTrials.gov](htt
 - The stated reasons differ by sponsor type: industry leans toward business and safety reasons, academic and other sponsors toward enrollment and funding.
 - The model explains little (pseudo R² = 0.03), so the findings are descriptive, not predictive.
 
+## Visual preview
+
+The chart below compares the reported termination reasons by sponsor type for Phase 2 and Phase 3 trials. Rates are shown per 100 finished trials.
+
+![Reported trial termination reasons by sponsor type and phase](images/stop_reasons_per_100_trials.png)
+
 ## Limitations
 Stated reasons are not proven causes. Keyword rules make mistakes and give one label per trial. The data are observational, and disease area and trial size are not controlled for. Full details are in the notebook.
 
