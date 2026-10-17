@@ -1,6 +1,14 @@
-## Clinical Trial Termination Analysis
+# TrialScope — Clinical Trial Termination Analysis
 
 An end-to-end data analysis and interactive Power BI portfolio dashboard examining **289,595** finished interventional clinical trials from [ClinicalTrials.gov](https://clinicaltrials.gov), curated through the **AACT** database (CTTI).
+
+---
+
+## 🔗 Live Interactive Dashboard
+
+Explore the full 6-page interactive report hosted on Power BI Service:
+
+👉 **[Launch TrialScope Live Dashboard](https://app.powerbi.com/view?r=eyJrIjoiMzUyZTljOTYtYTA5ZS00M2Q3LWJmY2ItMjUyMGUyNzEzZTFhIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9)**
 
 ---
 
@@ -16,9 +24,19 @@ An end-to-end data analysis and interactive Power BI portfolio dashboard examini
 
 ---
 
-## 📊 Interactive Power BI Dashboard
+## 📈 Key Findings: Termination Reasons by Sponsor & Phase
 
-The project includes a production-grade **Power BI Project (`.pbip`)** adhering to the modern PBIR format, featuring a custom dark `#111111` header, `#E89522` portfolio accent, and white modular visual cards.
+The chart below details the reported early termination reasons per 100 finished trials for Phase 2 and Phase 3 studies, directly contrasting **Industry** and **Other** sponsors:
+
+![Reported Trial Termination Reasons per 100 Finished Trials](images/stop_reasons_per_100_trials.png)
+
+> **Key takeaway:** In both Phase 2 and Phase 3, industry sponsors see substantially higher rates of trials stopped for sponsor/business decisions and safety criteria, whereas non-industry ("Other") trials stop far more often due to low enrollment accrual and lack of funding.
+
+---
+
+## 📊 Interactive Power BI Dashboard (`TrialScope`)
+
+The project includes a production-grade **Power BI Project (`.pbip`)** adhering to the modern PBIR format, featuring a custom dark `#111111` header, `#E89522` portfolio accent, and modular white visual cards.
 
 ### Dashboard Pages & Previews
 
@@ -152,7 +170,7 @@ IF ( [Total Trials] >= 20, 1, 0 )
 ├── dashboard.Report/                          # Power BI Report PBIR definition & visuals
 ├── dashboard.SemanticModel/                   # Power BI TMDL semantic model & DAX measures
 ├── screenshots/                               # High-resolution dashboard page previews
-├── images/                                    # Workflow diagrams & regression rate plots
+├── images/                                    # Workflow diagrams & stop reasons plot
 ├── powerbi_guide.md                           # Comprehensive dashboard build guide
 ├── requirements.txt                           # Python dependencies
 └── .gitignore                                 # Git ignore rules for data, cache, and notes
