@@ -1,4 +1,4 @@
-Clinical Trial Termination Analysis
+## Clinical Trial Termination Analysis
 
 An end-to-end data analysis and interactive Power BI portfolio dashboard examining **289,595** finished interventional clinical trials from [ClinicalTrials.gov](https://clinicaltrials.gov), curated through the **AACT** database (CTTI).
 
