@@ -1,0 +1,4 @@
+/// Folder holding the exported CSVs. Change this one value to repoint every table.
+expression DataFolder = "D:\study material\projects\clinical_trial_termination_analysis\powerbi_data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 40b3eb34-fe2e-47cd-9f49-46461f53b08a
+

@@ -1,0 +1,42 @@
+table dim_conditions
+	lineageTag: 3841b2eb-180e-4b57-aa1a-d009a46bfaa0
+
+	column nct_id
+		dataType: string
+		isHidden
+		lineageTag: aac5f616-f228-44fb-8861-f43cce983e13
+		summarizeBy: none
+		sourceColumn: nct_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column condition
+		dataType: string
+		lineageTag: db93689f-9cee-4061-a09c-123b4b7a557a
+		summarizeBy: none
+		sourceColumn: condition
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_conditions = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "dim_conditions.csv"), [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {{"nct_id", type text}, {"condition", type text}}),
+				  TrimmedText = Table.TransformColumns(ChangedTypes, {{"condition", each Text.Trim(_), type text}}),
+				  GroupedCovid = Table.TransformColumns(TrimmedText, {{"condition", each
+				      let
+				        t = if _ = null then null else Text.Lower(Text.Replace(Text.Replace(_, "-", ""), " ", "")),
+				        isCovid = t <> null and (Text.Contains(t, "covid") or Text.Contains(t, "sarscov2") or Text.Contains(t, "2019ncov") or Text.Contains(t, "novelcoronavirus") or Text.Contains(t, "coronavirusdisease2019") or Text.Contains(t, "severeacuterespiratorysyndromecoronavirus2")),
+				        isLong = isCovid and (Text.Contains(t, "long") or Text.Contains(t, "post"))
+				      in
+				        if isLong then "Long COVID / Post-COVID" else if isCovid then "COVID-19" else _, type text}}),
+				  RemovedBlankConditions = Table.SelectRows(GroupedCovid, each [condition] <> null and [condition] <> ""),
+				  RemovedDuplicates = Table.Distinct(RemovedBlankConditions)
+				in
+				  RemovedDuplicates
+
+	annotation PBI_ResultType = Table
+

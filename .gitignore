@@ -2,5 +2,20 @@
 data/
 *.txt
 !requirements.txt
+powerbi_data/
+
+# Dataset documentation & summary files
+summary of this dataset.txt
+summery of this dataset.txt
+summary of this dataset.*
+summery of this dataset.*
+
+# Python
 .ipynb_checkpoints/
 __pycache__/
+*.pyc
+
+# Power BI Project (PBIP) local cache and settings
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/editorSettings.json

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "b985e955350b101a3274",
+  "position": {
+    "x": 1020.9296638134642,
+    "y": 950.94658201979928,
+    "z": 5000,
+    "height": 129.6745339117908,
+    "width": 823.33037404311631,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Shown for trials starting 1990–2025. Earlier years have too few trials (often fewer than 20 per year) for a stable rate, and the most recent start years are still incomplete.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "12pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

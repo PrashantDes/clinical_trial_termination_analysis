@@ -1,0 +1,44 @@
+table dim_interventions
+	lineageTag: 41c1ed10-be62-44f5-9f6a-a99ec8e8935f
+
+	column nct_id
+		dataType: string
+		isHidden
+		lineageTag: 6621c651-ba4c-4289-a45d-45b02cf7ab9d
+		summarizeBy: none
+		sourceColumn: nct_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column intervention_type
+		dataType: string
+		lineageTag: b8398f95-df62-49e2-b850-b475cc49b54e
+		summarizeBy: none
+		sourceColumn: intervention_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column intervention_name
+		dataType: string
+		lineageTag: 967a0af3-e718-4b76-bc4a-77628c17af68
+		summarizeBy: none
+		sourceColumn: intervention_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_interventions = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "dim_interventions.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {{"nct_id", type text}, {"intervention_type", type text}, {"intervention_name", type text}}),
+				  TrimmedText = Table.TransformColumns(ChangedTypes, {{"intervention_type", each Text.Trim(_), type text}, {"intervention_name", each Text.Trim(_), type text}}),
+				  LabelledBlankNames = Table.ReplaceValue(TrimmedText, null, "Unspecified", Replacer.ReplaceValue, {"intervention_name"}),
+				  LabelledEmptyNames = Table.ReplaceValue(LabelledBlankNames, "", "Unspecified", Replacer.ReplaceValue, {"intervention_name"}),
+				  RemovedDuplicates = Table.Distinct(LabelledEmptyNames)
+				in
+				  RemovedDuplicates
+
+	annotation PBI_ResultType = Table
+

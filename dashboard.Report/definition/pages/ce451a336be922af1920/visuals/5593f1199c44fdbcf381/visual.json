@@ -1,0 +1,381 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "5593f1199c44fdbcf381",
+  "position": {
+    "x": 31.288510185061913,
+    "y": 173.00705631740115,
+    "z": 5000,
+    "height": 841.10877379842907,
+    "width": 1849.7031021168955,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Source and scope :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " Data comes from ClinicalTrials.gov via the AACT flat files (snapshot: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "[date]",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontStyle": "italic",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "). The analysis covers interventional studies with a start year of 1990–2025 whose status is Completed or Terminated. Ongoing, withdrawn and unknown-status trials are excluded.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Definitions :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "Finished trial:",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontStyle": "italic",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " completed or terminated. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "Termination rate:",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontStyle": "italic",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " terminated trials ÷ finished trials. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "Stopped per 100:",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontStyle": "italic",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " terminated trials per 100 finished trials in the full selection.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Stop-reason classification :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " Sponsors enter stop reasons as free text. I grouped them into categories with keyword-matching rules, and each trial gets one category. Wording that matches no rule falls under “Other”. Treat the categories as indicative, not exact.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Reading the numbers :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " Recent start years are incomplete because only already-finished trials are counted, so recent termination rates and year-over-year changes are understated. Rates are hidden or flagged where fewer than 30 finished trials exist. Enrollment uses the median because 164 mega-trials (over 100,000 participants) skew the mean (median 50 vs mean 458).",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Phase :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " “Not Applicable” covers behavioural, device and procedural studies, which have no phase. They are 49% of finished trials and stop less often (6.7%) than Phase 1–4 drug trials (13.8%), so do not compare them directly.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Counting :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " A trial can have several conditions, countries or intervention types and appears under each, so rows overlap. Totals show unique trials.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Author.",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": " Prashant Lodhi · ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "GitHub ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    },
+                    "url": "https://github.com/PrashantDes"
+                  },
+                  {
+                    "value": "· ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    }
+                  },
+                  {
+                    "value": "Portfolio",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt"
+                    },
+                    "url": "https://prashant-lodhi.vercel.app/"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

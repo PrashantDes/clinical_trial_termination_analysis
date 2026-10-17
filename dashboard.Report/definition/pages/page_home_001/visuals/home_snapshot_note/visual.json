@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "home_snapshot_note",
+  "position": {
+    "x": 1078.5627899964823,
+    "y": 323.15717181192315,
+    "z": 3000,
+    "height": 319.04051994170754,
+    "width": 819.2137221729007,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Portfolio Snapshot & Methodology: ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#15233a"
+                    }
+                  },
+                  {
+                    "value": "Approximately 1 in 10 finished interventional trials (10.3%) stopped early. Median enrollment (50 participants) is used instead of the arithmetic mean (458) because 164 mega-trials (>100,000 subjects) heavily skew the average. Stated stop reasons are classified from free-text sponsor submissions using keyword matching rules. Explore detailed findings in the sections below.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "18pt",
+                      "color": "#687386"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

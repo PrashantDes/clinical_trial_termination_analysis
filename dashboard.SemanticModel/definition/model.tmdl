@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dim_conditions","dim_countries","dim_interventions","dim_sponsors","fact_trials"]
+
+annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
+
+ref table dim_conditions
+ref table dim_countries
+ref table dim_interventions
+ref table dim_sponsors
+ref table fact_trials
+ref table DateTableTemplate_6e3496d4-9ca2-4952-a6e6-c648a5f90d9a
+ref table LocalDateTable_faaa99b2-8f58-42f8-a4e7-cac2911fb58e
+
+ref cultureInfo en-US
+

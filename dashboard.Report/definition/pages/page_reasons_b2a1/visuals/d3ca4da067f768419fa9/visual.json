@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "d3ca4da067f768419fa9",
+  "position": {
+    "x": 1452.154972706697,
+    "y": 673.62321927839173,
+    "z": 9000,
+    "height": 388,
+    "width": 168,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_trials"
+                    }
+                  },
+                  "Property": "Top Termination Reason"
+                }
+              },
+              "queryRef": "fact_trials.Top Termination Reason",
+              "nativeQueryRef": "Top Termination Reason"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

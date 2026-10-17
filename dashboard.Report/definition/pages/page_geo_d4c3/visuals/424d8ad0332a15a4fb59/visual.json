@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "424d8ad0332a15a4fb59",
+  "position": {
+    "x": 1260.7429103980828,
+    "y": 736.20023964851555,
+    "z": 9000,
+    "height": 307.36360005325525,
+    "width": 644.17520969245118,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Conditions chart notes :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "14pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "14pt"
+                    }
+                  },
+                  {
+                    "value": "“Healthy” is a label used by trials that enrol healthy volunteers (for example vaccine or early-phase safety studies). It is not a disease, but it is kept so the chart reflects the registry as filed. COVID-19 spelling variants (for example “Covid19”, “SARS-CoV-2”, “2019-nCoV”) are combined into one “COVID-19” category, while long COVID and post-COVID conditions are shown separately. Other condition names are shown as submitted, so related diseases may appear under more than one name.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "14pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "name": "TrialScope-Theme",
+  "dataColors": [
+    "#E89522",
+    "#B7C4CF",
+    "#15233A",
+    "#687386",
+    "#3F8B4B",
+    "#5B9BD5",
+    "#ED7D31",
+    "#70AD47"
+  ],
+  "foreground": "#15233A",
+  "foregroundNeutralSecondary": "#687386",
+  "foregroundNeutralTertiary": "#B7C4CF",
+  "foregroundNeutralLight": "#E5E8ED",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F6F6F7",
+  "backgroundNeutral": "#F6F6F7",
+  "backgroundDark": "#111111",
+  "tableAccent": "#E89522",
+  "shapeStroke": "#E5E8ED",
+  "good": "#3F8B4B",
+  "bad": "#B7C4CF",
+  "neutral": "#E89522",
+  "textClasses": {
+    "callout": {
+      "fontSize": 24,
+      "fontFace": "Segoe UI",
+      "color": "#15233A"
+    },
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI",
+      "color": "#15233A"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI",
+      "color": "#15233A"
+    },
+    "label": {
+      "fontSize": 11,
+      "fontFace": "Segoe UI",
+      "color": "#687386"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "visualContainerObjects": {
+          "background": [
+            {
+              "properties": {
+                "color": {
+                  "solid": {
+                    "color": "#FFFFFF"
+                  }
+                },
+                "transparency": 0,
+                "show": true
+              }
+            }
+          ],
+          "border": [
+            {
+              "properties": {
+                "color": {
+                  "solid": {
+                    "color": "#EEF0F3"
+                  }
+                },
+                "width": 1,
+                "radius": 4,
+                "show": true
+              }
+            }
+          ],
+          "dropShadow": [
+            {
+              "properties": {
+                "show": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "properties": {
+              "color": {
+                "solid": {
+                  "color": "#F6F6F7"
+                }
+              },
+              "transparency": 0
+            }
+          }
+        ]
+      }
+    }
+  }
+}

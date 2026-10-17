@@ -1,0 +1,289 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "TrialScope-Theme",
+      "reportVersionAtImport": {
+        "visual": "2.13.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "TrialScope-Theme",
+          "path": "BaseThemes/TrialScope.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "01-home-default06292933322884775.svg",
+          "path": "01-home-default06292933322884775.svg",
+          "type": "Image"
+        },
+        {
+          "name": "01-home-default17454915565440332.svg",
+          "path": "01-home-default17454915565440332.svg",
+          "type": "Image"
+        },
+        {
+          "name": "01-home-default5552378901731964.svg",
+          "path": "01-home-default5552378901731964.svg",
+          "type": "Image"
+        },
+        {
+          "name": "01-home-default9531149744223363.svg",
+          "path": "01-home-default9531149744223363.svg",
+          "type": "Image"
+        },
+        {
+          "name": "01-home-hover6190169529312015.svg",
+          "path": "01-home-hover6190169529312015.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-active7621637353394823.svg",
+          "path": "02-executive-overview-active7621637353394823.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-active9412055842240112.svg",
+          "path": "02-executive-overview-active9412055842240112.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-default16031789777810435.svg",
+          "path": "02-executive-overview-default16031789777810435.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-default2582443422444828.svg",
+          "path": "02-executive-overview-default2582443422444828.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-default6195450417603656.svg",
+          "path": "02-executive-overview-default6195450417603656.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-default7040795626099321.svg",
+          "path": "02-executive-overview-default7040795626099321.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-default7899178087012659.svg",
+          "path": "02-executive-overview-default7899178087012659.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-default8572142388140461.svg",
+          "path": "02-executive-overview-default8572142388140461.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-hover053262556839675956.svg",
+          "path": "02-executive-overview-hover053262556839675956.svg",
+          "type": "Image"
+        },
+        {
+          "name": "02-executive-overview-hover33453804941534127.svg",
+          "path": "02-executive-overview-hover33453804941534127.svg",
+          "type": "Image"
+        },
+        {
+          "name": "03-termination-reasons-active05131472459622832.svg",
+          "path": "03-termination-reasons-active05131472459622832.svg",
+          "type": "Image"
+        },
+        {
+          "name": "03-termination-reasons-default454343575812886.svg",
+          "path": "03-termination-reasons-default454343575812886.svg",
+          "type": "Image"
+        },
+        {
+          "name": "03-termination-reasons-default4870167549352814.svg",
+          "path": "03-termination-reasons-default4870167549352814.svg",
+          "type": "Image"
+        },
+        {
+          "name": "03-termination-reasons-default879749524746329.svg",
+          "path": "03-termination-reasons-default879749524746329.svg",
+          "type": "Image"
+        },
+        {
+          "name": "03-termination-reasons-default9693837560260983.svg",
+          "path": "03-termination-reasons-default9693837560260983.svg",
+          "type": "Image"
+        },
+        {
+          "name": "03-termination-reasons-hover8619176491519652.svg",
+          "path": "03-termination-reasons-hover8619176491519652.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-active7350107566104401.svg",
+          "path": "04-sponsor-phase-active7350107566104401.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default05896948021167925.svg",
+          "path": "04-sponsor-phase-default05896948021167925.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default21972690099660996.svg",
+          "path": "04-sponsor-phase-default21972690099660996.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default4973785688507991.svg",
+          "path": "04-sponsor-phase-default4973785688507991.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default5023760634427414.svg",
+          "path": "04-sponsor-phase-default5023760634427414.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default5685412334198363.svg",
+          "path": "04-sponsor-phase-default5685412334198363.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default7685762900204309.svg",
+          "path": "04-sponsor-phase-default7685762900204309.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-default770623083294172.svg",
+          "path": "04-sponsor-phase-default770623083294172.svg",
+          "type": "Image"
+        },
+        {
+          "name": "04-sponsor-phase-hover16571513836199758.svg",
+          "path": "04-sponsor-phase-hover16571513836199758.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-active07151615013828683.svg",
+          "path": "05-geography-conditions-active07151615013828683.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-defaul397309553436208.svg",
+          "path": "05-geography-conditions-defaul397309553436208.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-defaul5945513942553756.svg",
+          "path": "05-geography-conditions-defaul5945513942553756.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-defaul6100690984519009.svg",
+          "path": "05-geography-conditions-defaul6100690984519009.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-defaul7216894767192926.svg",
+          "path": "05-geography-conditions-defaul7216894767192926.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-defaul9231818137685428.svg",
+          "path": "05-geography-conditions-defaul9231818137685428.svg",
+          "type": "Image"
+        },
+        {
+          "name": "05-geography-conditions-hover6696140031349703.svg",
+          "path": "05-geography-conditions-hover6696140031349703.svg",
+          "type": "Image"
+        },
+        {
+          "name": "07-data-notes-active4272715187353189.svg",
+          "path": "07-data-notes-active4272715187353189.svg",
+          "type": "Image"
+        },
+        {
+          "name": "07-data-notes-default5276956945329155.svg",
+          "path": "07-data-notes-default5276956945329155.svg",
+          "type": "Image"
+        },
+        {
+          "name": "07-data-notes-default7683909814083528.svg",
+          "path": "07-data-notes-default7683909814083528.svg",
+          "type": "Image"
+        },
+        {
+          "name": "07-data-notes-default8840403904390205.svg",
+          "path": "07-data-notes-default8840403904390205.svg",
+          "type": "Image"
+        },
+        {
+          "name": "07-data-notes-default9462318306050154.svg",
+          "path": "07-data-notes-default9462318306050154.svg",
+          "type": "Image"
+        },
+        {
+          "name": "07-data-notes-hover48004015799565525.svg",
+          "path": "07-data-notes-hover48004015799565525.svg",
+          "type": "Image"
+        },
+        {
+          "name": "lab-tool6179974062920052.png",
+          "path": "lab-tool6179974062920052.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

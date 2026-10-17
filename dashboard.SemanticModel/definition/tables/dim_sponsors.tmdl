@@ -1,0 +1,50 @@
+table dim_sponsors
+	lineageTag: 2bb53a78-ef02-4580-b84b-135d7db58407
+
+	column nct_id
+		dataType: string
+		isHidden
+		lineageTag: ce52d339-f5ab-47bc-9f3b-22fb9e092207
+		summarizeBy: none
+		sourceColumn: nct_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sponsor_class
+		dataType: string
+		lineageTag: 922dc3ab-c7bb-47b1-88dd-3a2ca227664d
+		summarizeBy: none
+		sourceColumn: sponsor_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead_or_collaborator
+		dataType: string
+		lineageTag: 898926b3-dbc2-47c6-8fb2-37a75af9d110
+		summarizeBy: none
+		sourceColumn: lead_or_collaborator
+
+		annotation SummarizationSetBy = Automatic
+
+	column sponsor_name
+		dataType: string
+		lineageTag: 8c73f82c-8a69-4a66-878a-581c30be972e
+		summarizeBy: none
+		sourceColumn: sponsor_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_sponsors = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "dim_sponsors.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {{"nct_id", type text}, {"sponsor_class", type text}, {"lead_or_collaborator", type text}, {"sponsor_name", type text}}),
+				  TrimmedText = Table.TransformColumns(ChangedTypes, {{"sponsor_name", each Text.Trim(_), type text}}),
+				  RemovedDuplicates = Table.Distinct(TrimmedText)
+				in
+				  RemovedDuplicates
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,37 @@
+table dim_countries
+	lineageTag: ecf5c935-6cba-4b8d-9cde-898da400ee72
+
+	column nct_id
+		dataType: string
+		isHidden
+		lineageTag: 90e3afd0-05f2-4d48-afcb-1a085e71ecb5
+		summarizeBy: none
+		sourceColumn: nct_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: f3048956-cb57-4e68-b012-a855d0004816
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_countries = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "dim_countries.csv"), [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {{"nct_id", type text}, {"country", type text}}),
+				  TrimmedText = Table.TransformColumns(ChangedTypes, {{"country", each Text.Trim(_), type text}}),
+				  LabelledBlanks = Table.ReplaceValue(TrimmedText, null, "Unknown", Replacer.ReplaceValue, {"country"}),
+				  LabelledEmpty = Table.ReplaceValue(LabelledBlanks, "", "Unknown", Replacer.ReplaceValue, {"country"}),
+				  RemovedDuplicates = Table.Distinct(LabelledEmpty)
+				in
+				  RemovedDuplicates
+
+	annotation PBI_ResultType = Table
+

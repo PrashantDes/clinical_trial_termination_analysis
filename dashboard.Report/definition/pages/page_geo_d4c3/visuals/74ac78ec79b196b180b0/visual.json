@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "74ac78ec79b196b180b0",
+  "position": {
+    "x": 563.19318333111437,
+    "y": 736.20023964851555,
+    "z": 4000,
+    "height": 307.36360005325525,
+    "width": 666.26121688190665,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Counting intervention types :-",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "14pt",
+                      "color": "#000000"
+                    }
+                  },
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "14pt"
+                    }
+                  },
+                  {
+                    "value": "One trial can test several interventions of different types (drug, device, behavioural and so on). When the table is split by intervention type, that trial appears in every type it uses. Row counts therefore overlap and add up to 333,312, while the Total row shows the 289,595 unique trials. Termination rates are calculated within each type, so compare rates across rows rather than adding trial counts together.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "14pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

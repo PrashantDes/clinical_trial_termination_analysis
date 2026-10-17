@@ -1,0 +1,565 @@
+table fact_trials
+	lineageTag: 485edb0a-5efb-4a41-b692-3b2542b43a9d
+
+	measure 'Total Trials' = COUNTROWS(fact_trials)
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: a1000001-0001-0001-0001-000000000001
+
+	measure 'Terminated Trials' = CALCULATE(COUNTROWS(fact_trials), fact_trials[terminated] = 1)
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: a1000001-0001-0001-0001-000000000002
+
+	measure 'Completed Trials' = CALCULATE(COUNTROWS(fact_trials), fact_trials[terminated] = 0)
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: a1000001-0001-0001-0001-000000000003
+
+	measure 'Termination Rate' = DIVIDE([Terminated Trials], [Total Trials], 0)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: a1000001-0001-0001-0001-000000000004
+
+	measure 'Terminated per 100' =
+			
+			DIVIDE(
+			    [Terminated Trials],
+			    CALCULATE([Total Trials], REMOVEFILTERS(fact_trials[termination_reason]))
+			) * 100
+		formatString: 0.0
+		displayFolder: 1 Core KPIs
+		lineageTag: a1000001-0001-0001-0001-000000000005
+
+	measure 'Avg Enrollment' = AVERAGE(fact_trials[enrollment])
+		formatString: #,##0
+		displayFolder: 5 Design Factors
+		lineageTag: a1000001-0001-0001-0001-000000000006
+
+	/// Median is robust to the 164 trials with >100k participants; prefer over Avg Enrollment.
+	measure 'Median Enrollment' = MEDIAN(fact_trials[enrollment])
+		formatString: #,##0
+		displayFolder: 5 Design Factors
+		lineageTag: 68f4c572-b8de-44d8-8ca6-4efc2cf61af0
+
+	/// Average enrollment excluding trials above 100,000 participants.
+	measure 'Avg Enrollment (excl. outliers)' = CALCULATE(AVERAGE(fact_trials[enrollment]), fact_trials[enrollment_outlier] = 0)
+		formatString: #,##0
+		displayFolder: 5 Design Factors
+		lineageTag: 5db0f57e-c2c9-4f7e-b2d3-277a4677ed95
+
+	/// Termination rate excluding Not Applicable phase (device/behavioural) trials, so it is comparable across drug phases.
+	measure 'Drug-Phase Termination Rate' = CALCULATE([Termination Rate], fact_trials[phase] <> "NA")
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: e8e2e276-e11b-4da8-950b-4af5676eae2a
+
+	/// Dataset-wide termination rate ignoring all filters. Use as the benchmark line.
+	measure 'Overall Termination Rate' = CALCULATE([Termination Rate], REMOVEFILTERS(fact_trials), REMOVEFILTERS(dim_conditions), REMOVEFILTERS(dim_countries), REMOVEFILTERS(dim_interventions), REMOVEFILTERS(dim_sponsors))
+		formatString: 0.0%
+		displayFolder: 2 Benchmarks
+		lineageTag: dbb97086-4ebb-4059-b6f7-1be40d7b28bd
+
+	/// Percentage-point gap between the current selection and the dataset-wide termination rate.
+	measure 'Rate vs Benchmark (pp)' = ([Termination Rate] - [Overall Termination Rate]) * 100
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 2 Benchmarks
+		lineageTag: 687e206e-a7b5-4ff1-9323-b7f9a200187e
+
+	/// Termination rate of the prior start year. Works when start_year is on the axis.
+	measure 'Termination Rate PY' =
+			VAR _y = SELECTEDVALUE(fact_trials[start_year])
+			RETURN IF(NOT ISBLANK(_y), CALCULATE([Termination Rate], REMOVEFILTERS(fact_trials[start_year]), fact_trials[start_year] = _y - 1))
+		formatString: 0.0%
+		displayFolder: 2 Benchmarks
+		lineageTag: 84738f70-9a04-48c8-8a03-ef9b93198ee2
+
+	/// Year-over-year change in percentage points.
+	measure 'Termination Rate YoY (pp)' = IF(NOT ISBLANK([Termination Rate PY]), ([Termination Rate] - [Termination Rate PY]) * 100)
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 2 Benchmarks
+		lineageTag: 81178bce-1074-4e6d-aa54-d9b0d6d2d39b
+
+	/// Share of terminated trials that each termination reason accounts for.
+	measure 'Reason Share of Terminated' = DIVIDE([Terminated Trials], CALCULATE([Terminated Trials], REMOVEFILTERS(fact_trials[termination_reason])))
+		formatString: 0.0%
+		displayFolder: 3 Termination Reasons
+		lineageTag: 99ced221-7b75-4b66-a6ba-a8c9ef10e9e7
+
+	/// Most common specified reason (excludes Not given and Other).
+	measure 'Top Termination Reason' =
+			VAR _t = ADDCOLUMNS(VALUES(fact_trials[termination_reason]), "@n", [Terminated Trials])
+			VAR _top = TOPN(1, FILTER(_t, [termination_reason] <> "Not given" && [termination_reason] <> "Other"), [@n], DESC)
+			RETURN MAXX(_top, [termination_reason])
+		displayFolder: 3 Termination Reasons
+		lineageTag: aad167c5-1835-457d-8fb8-57b574f5fa3d
+
+	/// Share of terminated trials with Not given or Other as reason. High value = weak reporting.
+	measure 'Unspecified Reason Share' = DIVIDE(CALCULATE([Terminated Trials], fact_trials[termination_reason] IN {"Not given", "Other"}), [Terminated Trials])
+		formatString: 0.0%
+		displayFolder: 3 Termination Reasons
+		lineageTag: c68b76a1-95c6-4a0f-a33d-81254f8ca74c
+
+	/// Share of trials led by industry sponsors.
+	measure 'Industry Share of Trials' = DIVIDE(CALCULATE([Total Trials], fact_trials[sponsor_group] = "INDUSTRY"), [Total Trials])
+		formatString: 0.0%
+		displayFolder: 4 Sponsors and Reach
+		lineageTag: 89670862-0cdd-4daa-a4a6-03ae54100e9a
+
+	measure 'Countries Covered' = DISTINCTCOUNT(dim_countries[country])
+		formatString: #,##0
+		displayFolder: 4 Sponsors and Reach
+		lineageTag: 8dda8697-b341-4dd9-8412-6095a9d345e1
+
+	measure 'Conditions Covered' = DISTINCTCOUNT(dim_conditions[condition])
+		formatString: #,##0
+		displayFolder: 4 Sponsors and Reach
+		lineageTag: fd4c8160-a316-4491-954e-a5877c425966
+
+	measure 'Sponsors Covered' = DISTINCTCOUNT(dim_sponsors[sponsor_name])
+		formatString: #,##0
+		displayFolder: 4 Sponsors and Reach
+		lineageTag: e3c8ecd9-b2f5-4659-96a5-0c17e5c715bd
+
+	/// Termination rate of trials with a Data Monitoring Committee minus those without.
+	measure 'DMC Termination Gap (pp)' = (CALCULATE([Termination Rate], fact_trials[has_dmc_label] = "Yes") - CALCULATE([Termination Rate], fact_trials[has_dmc_label] = "No")) * 100
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 5 Design Factors
+		lineageTag: d05013d7-c176-4e5e-9147-1bc6fb7186e2
+
+	measure 'Outlier Trials (>100k)' = SUM(fact_trials[enrollment_outlier])
+		formatString: #,##0
+		displayFolder: 6 Data Quality
+		lineageTag: d44923c1-94de-4460-b9bc-08f5af1e73a7
+
+	measure 'Missing Date Trials' = CALCULATE(COUNTROWS(fact_trials), fact_trials[date_check] = "Missing date")
+		formatString: #,##0
+		displayFolder: 6 Data Quality
+		lineageTag: 2374ee86-a979-4178-931b-85a5dc450c4f
+
+	measure 'Missing Date %' = DIVIDE([Missing Date Trials], [Total Trials])
+		formatString: 0.0%
+		displayFolder: 6 Data Quality
+		lineageTag: 15184eae-cff9-430f-89fc-bed06dbf054f
+
+	/// Dynamic subtitle text for cards or header.
+	measure 'Selection Summary' = [Total Trials] & " trials | " & FORMAT([Termination Rate], "0.0%") & " terminated"
+		displayFolder: 7 Titles
+		lineageTag: 3b4d5a91-5326-48bf-8bad-dc0dddaff284
+
+	measure 'Finished Trials' =
+			CALCULATE(
+			    [Total Trials],
+			    KEEPFILTERS(fact_trials[overall_status] IN { "COMPLETED", "TERMINATED" })
+			)
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: b1000001-0001-0001-0001-000000000001
+
+	measure 'Terminated per 100 Finished Trials' = 100 * DIVIDE([Terminated Trials], [Finished Trials])
+		formatString: 0.0
+		displayFolder: 1 Core KPIs
+		lineageTag: b1000001-0001-0001-0001-000000000002
+
+	measure 'Has Sufficient Start Year Volume' = IF([Total Trials] >= 20, 1, 0)
+		formatString: 0
+		displayFolder: 6 Data Quality
+		lineageTag: b1000001-0001-0001-0001-000000000003
+
+	/// Total Trials for the same selection shifted back one start year. Works on cards, no start_year axis needed.
+	measure 'Total Trials LY' =
+			IF(
+			    ISCROSSFILTERED(fact_trials[start_year]),
+			    VAR _ly = TREATAS(SELECTCOLUMNS(VALUES(fact_trials[start_year]), "y", fact_trials[start_year] - 1), fact_trials[start_year])
+			    RETURN CALCULATE([Total Trials], REMOVEFILTERS(fact_trials[start_year]), _ly)
+			)
+		formatString: #,##0
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: ed3cf543-1256-4494-992c-24a0c2e62cf0
+
+	/// Terminated Trials for the selection shifted back one start year.
+	measure 'Terminated Trials LY' =
+			IF(
+			    ISCROSSFILTERED(fact_trials[start_year]),
+			    VAR _ly = TREATAS(SELECTCOLUMNS(VALUES(fact_trials[start_year]), "y", fact_trials[start_year] - 1), fact_trials[start_year])
+			    RETURN CALCULATE([Terminated Trials], REMOVEFILTERS(fact_trials[start_year]), _ly)
+			)
+		formatString: #,##0
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: cf786bd6-9af4-49a5-b20f-67e97bb4254c
+
+	/// Termination Rate for the selection shifted back one start year.
+	measure 'Termination Rate LY' =
+			IF(
+			    ISCROSSFILTERED(fact_trials[start_year]),
+			    VAR _ly = TREATAS(SELECTCOLUMNS(VALUES(fact_trials[start_year]), "y", fact_trials[start_year] - 1), fact_trials[start_year])
+			    RETURN CALCULATE([Termination Rate], REMOVEFILTERS(fact_trials[start_year]), _ly)
+			)
+		formatString: 0.0%
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: b7239583-8778-4b87-ae4d-5ce634262abf
+
+	/// Median Enrollment for the selection shifted back one start year.
+	measure 'Median Enrollment LY' =
+			IF(
+			    ISCROSSFILTERED(fact_trials[start_year]),
+			    VAR _ly = TREATAS(SELECTCOLUMNS(VALUES(fact_trials[start_year]), "y", fact_trials[start_year] - 1), fact_trials[start_year])
+			    RETURN CALCULATE([Median Enrollment], REMOVEFILTERS(fact_trials[start_year]), _ly)
+			)
+		formatString: #,##0
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 436b3c8a-2a2a-4286-8249-3777baf2a458
+
+	/// Percentage change in Total Trials vs last year.
+	measure 'Total Trials vs LY %' =
+			VAR _ly = [Total Trials LY]
+			RETURN IF(NOT ISBLANK(_ly) && _ly <> 0, DIVIDE([Total Trials] - _ly, _ly))
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 03543ed5-59ab-4527-b5c6-fc9b6b6fd66e
+
+	/// Percentage change in Terminated Trials vs last year.
+	measure 'Terminated Trials vs LY %' =
+			VAR _ly = [Terminated Trials LY]
+			RETURN IF(NOT ISBLANK(_ly) && _ly <> 0, DIVIDE([Terminated Trials] - _ly, _ly))
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: ecd5d9f6-fb9c-4407-8ef5-65838b86ff49
+
+	/// Percentage-point change in Termination Rate vs last year.
+	measure 'Termination Rate vs LY (pp)' =
+			VAR _ly = [Termination Rate LY]
+			RETURN IF(NOT ISBLANK(_ly) && _ly <> 0, ([Termination Rate] - _ly) * 100)
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 75b4b24a-3142-44a6-853e-a41b35983e7e
+
+	/// Percentage change in Median Enrollment vs last year.
+	measure 'Median Enrollment vs LY %' =
+			VAR _ly = [Median Enrollment LY]
+			RETURN IF(NOT ISBLANK(_ly) && _ly <> 0, DIVIDE([Median Enrollment] - _ly, _ly))
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 366e8205-6a52-4cbb-94dd-875cb44839dc
+
+	/// Subtitle text showing which start years the LY comparison covers, e.g. 'vs 2021' or 'vs 2019-2021'.
+	measure 'LY Period Label' =
+			IF(
+			    NOT ISCROSSFILTERED(fact_trials[start_year]),
+			    "Select a start year",
+			    VAR _min = MIN(fact_trials[start_year])
+			    VAR _max = MAX(fact_trials[start_year])
+			    RETURN IF(_min = _max, "vs " & (_min - 1), "vs " & (_min - 1) & "-" & (_max - 1))
+			)
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 6830ece1-6488-46cf-85d1-7d3f59719bd3
+
+	/// Font colour for Total Trials vs LY %. Up = green, down = red, no comparison = grey.
+	measure 'Total Trials LY Colour' =
+			VAR _v = [Total Trials vs LY %]
+			RETURN SWITCH(TRUE(), ISBLANK(_v), "#6B7280", _v > 0, "#1B7F3B", _v < 0, "#B3261E", "#6B7280")
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 9e210c67-1eb0-4be7-8a38-569f0a6a76ad
+
+	/// Font colour for Terminated Trials vs LY %. Up is bad (red), down is good (green).
+	measure 'Terminated Trials LY Colour' =
+			VAR _v = [Terminated Trials vs LY %]
+			RETURN SWITCH(TRUE(), ISBLANK(_v), "#6B7280", _v > 0, "#B3261E", _v < 0, "#1B7F3B", "#6B7280")
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: d4045393-2bff-4d6e-b7ad-4361344c6779
+
+	/// Font colour for Termination Rate vs LY (pp). Up is bad (red), down is good (green).
+	measure 'Termination Rate LY Colour' =
+			VAR _v = [Termination Rate vs LY (pp)]
+			RETURN SWITCH(TRUE(), ISBLANK(_v), "#6B7280", _v > 0, "#B3261E", _v < 0, "#1B7F3B", "#6B7280")
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: 93958fa9-24ac-4d69-92ce-64786789021d
+
+	/// Font colour for Median Enrollment vs LY %. Neutral slate either way, since larger or smaller trials are not inherently good or bad.
+	measure 'Median Enrollment LY Colour' = "#475569"
+		displayFolder: 8 Last Year (KPI Cards)
+		lineageTag: d6f3c09f-3610-4b7d-9341-11e04720e29b
+
+	measure 'Selection Label' =
+			
+			VAR minY = MIN ( fact_trials[start_year] )
+			VAR maxY = MAX ( fact_trials[start_year] )
+			RETURN
+			IF ( minY = maxY, "Start year: " & minY, "Start years: " & minY & "–" & maxY )
+		lineageTag: 92575214-c352-453c-8562-f21596a19d01
+
+	measure 'Maturity Note' =
+			
+			IF ( MAX ( fact_trials[start_year] ) >= 2023,
+			     "Recent start years are incomplete: only trials that have already finished are counted.",
+			     BLANK () )
+		lineageTag: fbd766c4-f255-4f1c-a99f-b3de5d767e1a
+
+	measure 'Intervention Note' =
+			
+			"A trial appears under every intervention type it uses, so rows overlap. Rows sum to "
+			& FORMAT ( SUMX ( VALUES ( dim_interventions[intervention_type] ), [Finished Trials] ), "#,0" )
+			& " versus " & FORMAT ( [Finished Trials], "#,0" )
+			& " unique trials in the current selection. Compare rates across rows rather than adding counts."
+		lineageTag: bf91f965-d189-4bba-a0a3-12e9929b92e7
+
+	column nct_id
+		dataType: string
+		lineageTag: 2ff485d4-9fac-4b37-9380-efa53a47f1ee
+		summarizeBy: none
+		sourceColumn: nct_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column brief_title
+		dataType: string
+		lineageTag: 6d48ce41-77c7-4b3c-8756-ea11884c4beb
+		summarizeBy: none
+		sourceColumn: brief_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column overall_status
+		dataType: string
+		lineageTag: f2129d5a-b038-435d-bdb8-f0a0999b08ce
+		summarizeBy: none
+		sourceColumn: overall_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column terminated
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b51749bb-22f7-444c-8ee8-008fea15c910
+		summarizeBy: none
+		sourceColumn: terminated
+
+		annotation SummarizationSetBy = Automatic
+
+	column phase
+		dataType: string
+		isHidden
+		lineageTag: 0b88792c-688c-4ade-bc9e-669ef071ec21
+		summarizeBy: none
+		sourceColumn: phase
+
+		annotation SummarizationSetBy = Automatic
+
+	column enrollment
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9a110dcc-a379-4aee-a243-79f6c67f80a3
+		summarizeBy: none
+		sourceColumn: enrollment
+
+		annotation SummarizationSetBy = Automatic
+
+	column enrollment_type
+		dataType: string
+		lineageTag: 8c1c3b05-9206-4f30-aaf3-e48f3a725d51
+		summarizeBy: none
+		sourceColumn: enrollment_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		lineageTag: 1f76f530-7162-4ff7-897c-0a155b8abaf7
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_class
+		dataType: string
+		lineageTag: 93bb8c4c-36a2-4617-b67b-d3a19b92ef86
+		summarizeBy: none
+		sourceColumn: source_class
+
+		annotation SummarizationSetBy = Automatic
+
+	column sponsor_group
+		dataType: string
+		lineageTag: a4baff8d-897a-4776-b664-a3de506dea06
+		summarizeBy: none
+		sourceColumn: sponsor_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_arms
+		dataType: int64
+		formatString: 0
+		lineageTag: 11ba2013-d456-495f-bd3b-af5b3b7645b6
+		summarizeBy: none
+		sourceColumn: number_of_arms
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_groups
+		dataType: string
+		lineageTag: 7982ddd3-5934-4815-810b-5ddb2be93a7a
+		summarizeBy: none
+		sourceColumn: number_of_groups
+
+		annotation SummarizationSetBy = Automatic
+
+	column why_stopped
+		dataType: string
+		lineageTag: 0cf9b60d-eea8-4d81-878f-68fdbcc125e6
+		summarizeBy: none
+		sourceColumn: why_stopped
+
+		annotation SummarizationSetBy = Automatic
+
+	column termination_reason
+		dataType: string
+		lineageTag: bd103db4-91c4-4d8b-abc5-9a0f3b1bf758
+		summarizeBy: none
+		sourceColumn: termination_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_dmc
+		dataType: string
+		isHidden
+		lineageTag: d5a0e51c-81f1-4e17-99ad-480b01e9ece7
+		summarizeBy: none
+		sourceColumn: has_dmc
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_fda_regulated_drug
+		dataType: string
+		isHidden
+		lineageTag: 3c8d1105-34ca-470b-a6a0-15a6539cb843
+		summarizeBy: none
+		sourceColumn: is_fda_regulated_drug
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_fda_regulated_device
+		dataType: string
+		isHidden
+		lineageTag: 1fd2c7b9-c03d-4934-8c51-5ef1feb74b21
+		summarizeBy: none
+		sourceColumn: is_fda_regulated_device
+
+		annotation SummarizationSetBy = Automatic
+
+	column start_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 50e6c892-7a2f-4e45-b547-60f590d48031
+		summarizeBy: none
+		sourceColumn: start_year
+
+		annotation SummarizationSetBy = User
+
+	column start_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cd11d7ec-48eb-486b-ba99-c97c00f590d6
+		summarizeBy: none
+		sourceColumn: start_month
+
+		variation Variation
+			isDefault
+			relationship: 56e62013-4dff-4393-9d5d-c420bd907248
+			defaultHierarchy: LocalDateTable_faaa99b2-8f58-42f8-a4e7-cac2911fb58e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column completion_year
+		dataType: int64
+		formatString: 0
+		lineageTag: b3da5b99-faa7-477d-8c3a-622add29cea6
+		summarizeBy: none
+		sourceColumn: completion_year
+
+		annotation SummarizationSetBy = User
+
+	column phase_order
+		dataType: int64
+		isHidden
+		lineageTag: 368a082a-bca1-48f9-80ec-4c64ba374968
+		summarizeBy: none
+		sourceColumn: phase_order
+
+	column enrollment_band_order
+		dataType: int64
+		isHidden
+		lineageTag: d6792e16-f149-4be6-9ba3-73cb280ca6c3
+		summarizeBy: none
+		sourceColumn: enrollment_band_order
+
+	column phase_label
+		dataType: string
+		lineageTag: 87407b69-6652-40ca-9525-2ffa8935b900
+		summarizeBy: none
+		sourceColumn: phase_label
+		sortByColumn: phase_order
+
+	column enrollment_band
+		dataType: string
+		lineageTag: e9898c33-f5f4-439f-8bb4-ea5f423e4b57
+		summarizeBy: none
+		sourceColumn: enrollment_band
+		sortByColumn: enrollment_band_order
+
+	column enrollment_outlier
+		dataType: int64
+		lineageTag: 3b49e5ed-3cde-44c1-bb10-c68ff0ed6f1b
+		summarizeBy: none
+		sourceColumn: enrollment_outlier
+
+	column has_dmc_label
+		dataType: string
+		lineageTag: 8bfba42c-498b-4d97-9b4a-46257ebedfd5
+		summarizeBy: none
+		sourceColumn: has_dmc_label
+
+	column fda_drug_label
+		dataType: string
+		lineageTag: 2ab28385-9ac4-47ec-9be5-4902b0953c93
+		summarizeBy: none
+		sourceColumn: fda_drug_label
+
+	column fda_device_label
+		dataType: string
+		lineageTag: 31151dc3-a9f2-4bf5-b2d8-f21f1512a70e
+		summarizeBy: none
+		sourceColumn: fda_device_label
+
+	column date_check
+		dataType: string
+		lineageTag: 00a4110e-52c6-4f7c-99d5-7b9a5c4716aa
+		summarizeBy: none
+		sourceColumn: date_check
+
+	partition fact_trials = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "fact_trials.csv"), [Delimiter = ",", Columns = 20, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  ChangedTypes = Table.TransformColumnTypes(PromotedHeaders, {{"nct_id", type text}, {"brief_title", type text}, {"overall_status", type text}, {"terminated", Int64.Type}, {"phase", type text}, {"enrollment", Int64.Type}, {"enrollment_type", type text}, {"source", type text}, {"source_class", type text}, {"sponsor_group", type text}, {"number_of_arms", Int64.Type}, {"number_of_groups", type text}, {"why_stopped", type text}, {"termination_reason", type text}, {"has_dmc", type text}, {"is_fda_regulated_drug", type text}, {"is_fda_regulated_device", type text}, {"start_year", Int64.Type}, {"start_month", type date}, {"completion_year", Int64.Type}}),
+				  TrimmedText = Table.TransformColumns(ChangedTypes, {{"brief_title", each Text.Trim(_), type text}, {"phase", each Text.Trim(_), type text}, {"sponsor_group", each Text.Trim(_), type text}, {"termination_reason", each Text.Trim(_), type text}}),
+				  LabelledEnrollmentType = Table.TransformColumns(TrimmedText, {{"enrollment_type", each if _ = null or _ = "" then "Unknown" else _, type text}}),
+				  AddedPhaseLabel = Table.AddColumn(LabelledEnrollmentType, "phase_label", each let p = [phase] in if p = "NA" then "Not Applicable" else if p = "EARLY_PHASE1" then "Early Phase 1" else if p = "PHASE1" then "Phase 1" else if p = "PHASE1/PHASE2" then "Phase 1/2" else if p = "PHASE2" then "Phase 2" else if p = "PHASE2/PHASE3" then "Phase 2/3" else if p = "PHASE3" then "Phase 3" else if p = "PHASE4" then "Phase 4" else "Unknown", type text),
+				  AddedPhaseOrder = Table.AddColumn(AddedPhaseLabel, "phase_order", each let p = [phase] in if p = "EARLY_PHASE1" then 1 else if p = "PHASE1" then 2 else if p = "PHASE1/PHASE2" then 3 else if p = "PHASE2" then 4 else if p = "PHASE2/PHASE3" then 5 else if p = "PHASE3" then 6 else if p = "PHASE4" then 7 else if p = "NA" then 8 else 9, Int64.Type),
+				  AddedEnrollmentBand = Table.AddColumn(AddedPhaseOrder, "enrollment_band", each let e = [enrollment] in if e = null then "Unknown" else if e = 0 then "0" else if e <= 50 then "1-50" else if e <= 200 then "51-200" else if e <= 1000 then "201-1,000" else "1,000+", type text),
+				  AddedEnrollmentBandOrder = Table.AddColumn(AddedEnrollmentBand, "enrollment_band_order", each let e = [enrollment] in if e = null then 6 else if e = 0 then 1 else if e <= 50 then 2 else if e <= 200 then 3 else if e <= 1000 then 4 else 5, Int64.Type),
+				  AddedEnrollmentOutlier = Table.AddColumn(AddedEnrollmentBandOrder, "enrollment_outlier", each if [enrollment] <> null and [enrollment] > 100000 then 1 else 0, Int64.Type),
+				  AddedDmcLabel = Table.AddColumn(AddedEnrollmentOutlier, "has_dmc_label", each if [has_dmc] = "t" then "Yes" else if [has_dmc] = "f" then "No" else "Unknown", type text),
+				  AddedFdaDrugLabel = Table.AddColumn(AddedDmcLabel, "fda_drug_label", each if [is_fda_regulated_drug] = "t" then "Yes" else if [is_fda_regulated_drug] = "f" then "No" else "Unknown", type text),
+				  AddedFdaDeviceLabel = Table.AddColumn(AddedFdaDrugLabel, "fda_device_label", each if [is_fda_regulated_device] = "t" then "Yes" else if [is_fda_regulated_device] = "f" then "No" else "Unknown", type text),
+				  AddedDateCheck = Table.AddColumn(AddedFdaDeviceLabel, "date_check", each if [start_year] = null or [completion_year] = null then "Missing date" else if [completion_year] < [start_year] then "Completion before start" else "Valid", type text)
+				in
+				  AddedDateCheck
+
+	annotation PBI_ResultType = Table
+

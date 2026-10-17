@@ -1,0 +1,25 @@
+relationship 56e62013-4dff-4393-9d5d-c420bd907248
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_trials.start_month
+	toColumn: LocalDateTable_faaa99b2-8f58-42f8-a4e7-cac2911fb58e.Date
+
+relationship AutoDetected_148fa4ea-6bb1-487b-9ded-cd894bf0bc16
+	crossFilteringBehavior: bothDirections
+	fromColumn: dim_conditions.nct_id
+	toColumn: fact_trials.nct_id
+
+relationship AutoDetected_6723a6fb-68f2-4731-9747-a7d7f4608105
+	crossFilteringBehavior: bothDirections
+	fromColumn: dim_countries.nct_id
+	toColumn: fact_trials.nct_id
+
+relationship AutoDetected_cfbcacaf-4d0f-4f07-9e60-05794ca877e5
+	crossFilteringBehavior: bothDirections
+	fromColumn: dim_interventions.nct_id
+	toColumn: fact_trials.nct_id
+
+relationship AutoDetected_f596ece3-d90b-413a-80aa-4eef99cfcad3
+	crossFilteringBehavior: bothDirections
+	fromColumn: dim_sponsors.nct_id
+	toColumn: fact_trials.nct_id
+
