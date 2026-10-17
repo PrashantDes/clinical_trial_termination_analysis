@@ -1,4 +1,4 @@
-# TrialScope — Clinical Trial Termination Analysis
+# Clinical Trial Termination Analysis
 
 An end-to-end data analysis and interactive Power BI portfolio dashboard examining **289,595** finished interventional clinical trials from [ClinicalTrials.gov](https://clinicaltrials.gov), curated through the **AACT** database (CTTI).
 
@@ -8,7 +8,7 @@ An end-to-end data analysis and interactive Power BI portfolio dashboard examini
 
 Explore the full 6-page interactive report hosted on Power BI Service:
 
-👉 **[Launch TrialScope Live Dashboard](https://app.powerbi.com/view?r=eyJrIjoiMzUyZTljOTYtYTA5ZS00M2Q3LWJmY2ItMjUyMGUyNzEzZTFhIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9)**
+👉 **[Launch Live Dashboard](https://app.powerbi.com/view?r=eyJrIjoiMzUyZTljOTYtYTA5ZS00M2Q3LWJmY2ItMjUyMGUyNzEzZTFhIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9)**
 
 ---
 
