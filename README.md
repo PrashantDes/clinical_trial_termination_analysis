@@ -20,7 +20,7 @@ Explore the full 6-page interactive report hosted on Power BI Service:
 - **Reported Stop Reasons:** While overall termination odds align across sponsors, stated rationale diverges markedly:
   - **Industry:** Business decisions, strategic portfolio prioritization, and safety signals.
   - **Other / Academic:** Insufficient patient enrollment and funding withdrawal.
-- **Study Scale:** Median trial enrollment sits at **50 participants** (mean 458 is heavily skewed by 164 mega-trials enrolling >100,000 participants).
+- **Study Scale:** Median trial enrollment sits at **56 participants** (mean 610 is heavily skewed by 164 mega-trials enrolling >100,000 participants).
 
 ---
 
