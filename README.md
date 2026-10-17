@@ -16,7 +16,7 @@ An end-to-end data analysis and interactive Power BI portfolio dashboard examini
 
 ---
 
-## 📊 Interactive Power BI Dashboard (`TrialScope`)
+## 📊 Interactive Power BI Dashboard
 
 The project includes a production-grade **Power BI Project (`.pbip`)** adhering to the modern PBIR format, featuring a custom dark `#111111` header, `#E89522` portfolio accent, and white modular visual cards.
 
